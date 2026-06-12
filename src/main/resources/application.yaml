@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: isb-sadaqah-and-charity-management
+
+server:
+  port: 8080
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true   # /actuator/health/liveness + /readiness for K8s probes
+  info:
+    env:
+      enabled: true
+
+info:
+  isb:
+    serviceDomain: "Sadaqah And Charity Management"
+    businessArea: "Shariah Governance and Compliance"
+    businessDomain: "Shariah Governance"
+    functionalPattern: "Manage"
+    assetType: "Charity Pool"
+    controlRecord: "Charity Pool Management Plan"
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceDomain:
+        slidingWindowSize: 20
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

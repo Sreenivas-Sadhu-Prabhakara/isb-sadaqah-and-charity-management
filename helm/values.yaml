@@ -1,0 +1,46 @@
+# Default values for isb-sadaqah-and-charity-management (BIAN Service Domain: Sadaqah And Charity Management)
+
+image:
+  repository: isb/isb-sadaqah-and-charity-management
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+# Namespace is set per BIAN business area by deploy-all.sh (helm -n <ns>).
+# These labels ride on every object for mesh policy + observability slicing.
+isb:
+  serviceDomain: "sadaqah-and-charity-management"
+  businessArea: "shariah-governance-and-compliance"
+  businessDomain: "shariah-governance"
+  functionalPattern: "manage"
+
+service:
+  port: 8080
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+# Gateway API route (Cilium implements Gateway API natively — no ingress controller)
+route:
+  enabled: true
+  gatewayName: isb-gateway
+  gatewayNamespace: isb-system
+  # External path prefix; rewritten to / before hitting the service
+  pathPrefix: /isb-sadaqah-and-charity-management
+
+# CiliumNetworkPolicy — default-deny posture, explicit allows
+networkPolicy:
+  enabled: true
+  monitoringNamespace: monitoring
+
+# Runtime wiring (Phase 2d gates): activate Spring profiles / inject env.
+#   springProfiles: "postgres,kafka"
+#   extraEnv:
+#     - { name: BIAN_DB_URL, value: "jdbc:postgresql://pg-<repo>:5432/<db>" }
+springProfiles: ""
+extraEnv: []

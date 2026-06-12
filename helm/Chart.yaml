@@ -1,0 +1,14 @@
+apiVersion: v2
+name: isb-sadaqah-and-charity-management
+description: "BIAN Service Domain: Sadaqah And Charity Management (Manage pattern, Shariah Governance and Compliance)"
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - islamic-banking
+  - manage
+annotations:
+  isb/business-area: "Shariah Governance and Compliance"
+  isb/business-domain: "Shariah Governance"
+  isb/asset-type: "Charity Pool"
+  isb/control-record: "Charity Pool Management Plan"
